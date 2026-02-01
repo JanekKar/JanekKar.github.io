@@ -54,6 +54,11 @@
         h1 {
             font-size: 2.5em;
             color: #ff6b9d;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        h2{
+            color: #ff6b9d;
             margin-bottom: 40px;
             animation: pulse 2s ease-in-out infinite;
         }
@@ -155,7 +160,8 @@
 <body>
     <div class="hearts" id="hearts"></div>
     <div class="container">
-        <h1>Czy zostaniesz moją Walentynką? 💝</h1>
+      <h1>Daria</h1>
+      <h2>Czy zostaniesz moją Walentynką? 💗</h2>
         <div class="buttons">
             <button id="yesBtn">TAK &lt;3</button>
             <button id="noBtn">Niee</button>
@@ -194,21 +200,23 @@
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
 
-            // Get the white container dimensions (not buttons container)
+            // Get the white container dimensions
             const container = document.querySelector('.container');
-            const containerRect = container.getBoundingClientRect();
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
 
-            // Calculate safe bounds within the white container
-            const padding = 20;
-            const maxX = containerRect.width - btnWidth - padding;
-            const maxY = containerRect.height - btnHeight - padding;
+            // Account for container padding
+            const containerPadding = 40; // from CSS padding
 
-            // Ensure minimum values are positive
-            const safeMaxX = Math.max(padding, maxX);
-            const safeMaxY = Math.max(padding, maxY);
+            // Calculate safe bounds within the white container (accounting for padding)
+            const minX = containerPadding;
+            const minY = containerPadding;
+            const maxX = containerWidth - btnWidth - containerPadding;
+            const maxY = containerHeight - btnHeight - containerPadding;
 
-            const randomX = padding + Math.random() * (safeMaxX - padding);
-            const randomY = padding + Math.random() * (safeMaxY - padding);
+            // Generate random position within safe bounds
+            const randomX = minX + Math.random() * (maxX - minX);
+            const randomY = minY + Math.random() * (maxY - minY);
 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
