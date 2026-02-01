@@ -28,6 +28,28 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             max-width: 500px;
             width: 90%;
+            min-height: 400px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                min-height: 500px;
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 1.1em;
+            }
+
+            .buttons {
+                min-height: 200px;
+            }
         }
         h1 {
             font-size: 2.5em;
@@ -172,21 +194,21 @@
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
 
-            // Get buttons container dimensions (not the whole container)
-            const buttonsContainer = document.querySelector('.buttons');
-            const buttonsRect = buttonsContainer.getBoundingClientRect();
+            // Get the white container dimensions (not buttons container)
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
 
-            // Calculate safe bounds within the buttons container
-            const padding = 10;
-            const maxX = buttonsRect.width - btnWidth - padding;
-            const maxY = buttonsRect.height - btnHeight - padding;
+            // Calculate safe bounds within the white container
+            const padding = 20;
+            const maxX = containerRect.width - btnWidth - padding;
+            const maxY = containerRect.height - btnHeight - padding;
 
             // Ensure minimum values are positive
             const safeMaxX = Math.max(padding, maxX);
             const safeMaxY = Math.max(padding, maxY);
 
-            const randomX = Math.random() * safeMaxX;
-            const randomY = Math.random() * safeMaxY;
+            const randomX = padding + Math.random() * (safeMaxX - padding);
+            const randomY = padding + Math.random() * (safeMaxY - padding);
 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
