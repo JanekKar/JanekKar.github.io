@@ -49,7 +49,7 @@
             justify-content: center;
             margin-top: 30px;
             position: relative;
-            min-height: 120px;
+            min-height: 150px;
             align-items: flex-start;
         }
         button {
@@ -171,17 +171,26 @@
             // Get button dimensions
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
-            // Get container dimensions
-            const container = document.querySelector('.container');
-            const containerRect = container.getBoundingClientRect();
-            // Calculate random position within container
-            const maxX = containerRect.width - btnWidth - 40;
-            const maxY = containerRect.height - btnHeight - 40;
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
+
+            // Get buttons container dimensions (not the whole container)
+            const buttonsContainer = document.querySelector('.buttons');
+            const buttonsRect = buttonsContainer.getBoundingClientRect();
+
+            // Calculate safe bounds within the buttons container
+            const padding = 10;
+            const maxX = buttonsRect.width - btnWidth - padding;
+            const maxY = buttonsRect.height - btnHeight - padding;
+
+            // Ensure minimum values are positive
+            const safeMaxX = Math.max(padding, maxX);
+            const safeMaxY = Math.max(padding, maxY);
+
+            const randomX = Math.random() * safeMaxX;
+            const randomY = Math.random() * safeMaxY;
 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
+
             // Make yes button bigger
             const newSize = 1 + (noBtnClicks * 0.1);
             yesBtn.style.transform = `scale(${newSize})`;
